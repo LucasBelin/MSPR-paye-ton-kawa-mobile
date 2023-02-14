@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import * as React from "react"
+import ProductDetails from "./pages/ProductDetails"
+import Products from "./pages/Products"
 
-export default function App() {
+const Stack = createNativeStackNavigator()
+
+function App() {
+  const queryClient = new QueryClient()
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <QueryClientProvider client={queryClient}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Products"
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "rgb(59, 130, 246)",
+            },
+            headerTitleStyle: {
+              color: "white",
+            },
+          }}
+        >
+          <Stack.Screen name="Products" component={Products} />
+          <Stack.Screen name="Product" component={ProductDetails} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </QueryClientProvider>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
