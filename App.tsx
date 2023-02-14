@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import * as React from "react"
 import ProductDetails from "./pages/ProductDetails"
 import Products from "./pages/Products"
 
@@ -19,12 +18,19 @@ function App() {
             headerStyle: {
               backgroundColor: "rgb(59, 130, 246)",
             },
+            headerTintColor: "#fff",
             headerTitleStyle: {
               color: "white",
             },
           }}
         >
-          <Stack.Screen name="Products" component={Products} />
+          <Stack.Screen
+            name="Products"
+            component={Products}
+            options={{
+              header: props => null,
+            }}
+          />
           <Stack.Screen name="Product" component={ProductDetails} />
         </Stack.Navigator>
       </NavigationContainer>
