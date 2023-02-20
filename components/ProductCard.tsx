@@ -25,7 +25,10 @@ export default function ProductCard({ product, navigation }: { product: Product;
       </View>
       <View style={styles.buttons}>
         <View>
-          <Pressable style={styles.navigationButton} onPress={() => navigation.navigate("Product", { id: product.id })}>
+          <Pressable
+            style={styles.navigationButton}
+            onPress={() => navigation.navigate("Product", { product: product })}
+          >
             <Text style={styles.navigationText}>View details</Text>
             <AntDesign name="right" size={14} color="white" />
           </Pressable>
