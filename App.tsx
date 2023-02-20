@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import Login from "./pages/Login"
 import ProductDetails from "./pages/ProductDetails"
 import Products from "./pages/Products"
 
@@ -13,7 +14,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Products"
+          initialRouteName="Login"
           screenOptions={{
             headerStyle: {
               backgroundColor: "rgb(59, 130, 246)",
@@ -24,6 +25,7 @@ function App() {
             },
           }}
         >
+          <Stack.Screen name="Login" component={Login} options={{ header: props => null }} />
           <Stack.Screen
             name="Products"
             component={Products}
