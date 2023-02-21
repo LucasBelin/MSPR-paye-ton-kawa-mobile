@@ -19,6 +19,9 @@ function App() {
             headerStyle: {
               backgroundColor: "rgb(59, 130, 246)",
             },
+            contentStyle: {
+              backgroundColor: "rgb(59, 130, 246)",
+            },
             headerTintColor: "#fff",
             headerTitleStyle: {
               color: "white",
