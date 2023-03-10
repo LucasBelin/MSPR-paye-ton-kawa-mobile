@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Image, Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import RandomQRCode from "../components/RandomQRCode"
-import { storeToken } from "../storage/async-storage"
+import { storeToken } from "../utils/async-storage"
 
 export default function Login({ navigation }: any) {
   const [hasPermission, setHasPermission] = useState(false)
