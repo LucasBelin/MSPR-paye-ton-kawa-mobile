@@ -1,29 +1,43 @@
 import { Ionicons } from "@expo/vector-icons"
 import { BarCodeScanner } from "expo-barcode-scanner"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Image, Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import RandomQRCode from "../components/RandomQRCode"
+import { storeToken } from "../storage/async-storage"
 
-export default function Login() {
+export default function Login({ navigation }: any) {
   const [hasPermission, setHasPermission] = useState(false)
   const [scanning, setScanning] = useState(false)
-  const [scanned, setScanned] = useState(false)
-  const [permissionResponse, setPermissionResponse] = BarCodeScanner.usePermissions()
 
-  async function getCameraPermission() {
-    const { status } = await BarCodeScanner.requestPermissionsAsync()
-    setHasPermission(status === "granted")
-  }
+  useEffect(() => {
+    const getBarCodeScannerPermissions = async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync()
+      setHasPermission(status === "granted")
+    }
+
+    getBarCodeScannerPermissions()
+  }, [])
 
   async function startScanning() {
-    await getCameraPermission()
     if (hasPermission) setScanning(true)
   }
 
-  function handleBarCodeScanned({ type, data }: any) {
-    setScanned(true)
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`)
+  async function handleBarCodeScanned({ type, data }: any) {
+    setScanning(false)
+    await storeToken(data)
+    navigation.navigate("Products")
+  }
+
+  if (scanning) {
+    return (
+      <SafeAreaView style={[StyleSheet.absoluteFillObject, { alignItems: "center" }]}>
+        <BarCodeScanner onBarCodeScanned={handleBarCodeScanned} style={StyleSheet.absoluteFillObject} />
+        <Pressable style={styles.cancel} onPress={() => setScanning(false)}>
+          <Text style={{ color: "white", fontSize: 20 }}>Cancel</Text>
+        </Pressable>
+      </SafeAreaView>
+    )
   }
 
   return (
@@ -84,6 +98,14 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     marginTop: 80,
+  },
+  cancel: {
+    position: "absolute",
+    bottom: 5,
+    paddingVertical: 7,
+    paddingHorizontal: 50,
+    borderRadius: 18,
+    backgroundColor: "#cf142b",
   },
   logo: {
     backgroundColor: "white",
