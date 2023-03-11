@@ -2,11 +2,11 @@ import { AntDesign, Feather, Ionicons } from "@expo/vector-icons"
 import React from "react"
 import { SafeAreaView, StyleSheet, Text, View } from "react-native"
 import { Product } from "../schemas/ProductSchemas"
-import { invertColor, isCSSColor } from "../utils/colors-utils"
+import { getContrastColor, isCSSColor } from "../utils/colors-utils"
 
 export default function ProductDetails({ route }: any) {
   const product: Product = route.params.product
-  const color = isCSSColor(product.details.color) ? invertColor(product.details.color) : "white"
+  const color = getContrastColor(product.details.color)
 
   return (
     <SafeAreaView>

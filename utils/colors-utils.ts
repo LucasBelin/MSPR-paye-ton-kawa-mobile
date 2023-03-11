@@ -150,30 +150,14 @@ const cssColors = {
   yellowgreen: "#9acd32",
 } as const
 
-export function invertColor(color: string) {
-  let hex = getHexFromCSSColor(color)
-  if (hex.indexOf("#") === 0) {
-    hex = hex.slice(1)
-  }
-  // convert 3-digit hex to 6-digits.
-  if (hex.length === 3) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
-  }
-  if (hex.length !== 6) {
-    throw new Error("Invalid HEX color.")
-  }
-  // invert color components
-  var r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
-    g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
-    b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16)
-  // pad each with zeros and return
-  return "#" + padZero(r) + padZero(g) + padZero(b)
-}
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  let bigint = parseInt(hex.substring(1), 16)
+  console.log(bigint)
+  let r = (bigint >> 16) & 255
+  let g = (bigint >> 8) & 255
+  let b = bigint & 255
 
-function padZero(str: string, len?: number) {
-  len = len || 2
-  var zeros = new Array(len).join("0")
-  return (zeros + str).slice(-len)
+  return { r, g, b }
 }
 
 export const isCSSColor = (color: string) => {
@@ -182,4 +166,14 @@ export const isCSSColor = (color: string) => {
 
 export const getHexFromCSSColor = (color: string): string => {
   return cssColors[color as keyof typeof cssColors]
+}
+
+export const getContrastColor = (color: string) => {
+  if (!isCSSColor(color)) {
+    return "#fff"
+  }
+  const hex = getHexFromCSSColor(color)
+  const rgb = hexToRgb(hex)
+  const brightness = Math.round((rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000)
+  return brightness > 125 ? "#000000" : "#ffffff"
 }
