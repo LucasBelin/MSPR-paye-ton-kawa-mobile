@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:paye_ton_kawa/models/boxes.dart';
 import 'package:paye_ton_kawa/products_page.dart';
@@ -18,15 +19,17 @@ class QRCodeScanner extends StatefulWidget {
 class _QRCodeScannerState extends State<QRCodeScanner> {
   MobileScannerController cameraController = MobileScannerController();
   bool canScan = true;
+  late Response res;
 
   void _onQRCodeScanned(String? code) async {
     if (code == null || code.isEmpty || !canScan) return;
 
     canScan = false;
 
-    bool res = await _login(code);
-    if (res) {
-      box.put("jwt_token", code);
+    bool loggedIn = await _login(code);
+    if (loggedIn) {
+      final jsonResponse = jsonDecode(res.body);
+      box.put("jwt_token", jsonResponse);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const ProductsPage()),
@@ -45,6 +48,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
+      res = response;
       return true;
     } else if (response.statusCode == 401 || response.statusCode == 404) {
       showDialog(
