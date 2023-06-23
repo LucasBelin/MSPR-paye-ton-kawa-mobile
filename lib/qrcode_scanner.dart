@@ -60,6 +60,7 @@ class _QRCodeScannerState extends State<QRCodeScanner> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
+                canScan = true;
               },
               child: const Text('OK'),
             ),
