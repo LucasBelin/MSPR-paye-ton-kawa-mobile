@@ -53,6 +53,7 @@ jobs:
     steps:
       - name: build apk
         run: flutter build apk
+
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
