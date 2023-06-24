@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: const Text(
-                "To login please scan the QR Code you received in your email.",
+                "Pour vous connecter, veuillez scanner le QR Code que vous avez reçu par mail.",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(width: 5), // Add a SizedBox for spacing
                         Text(
-                          "Scan QR Code",
+                          "Scanner QR Code",
                           style: TextStyle(
                             color: Colors.white,
                           ),
