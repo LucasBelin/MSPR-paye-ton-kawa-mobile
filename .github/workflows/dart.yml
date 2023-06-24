@@ -79,7 +79,7 @@ jobs:
     name: Release APK
     needs: [tests, apk]
     runs-on: ubuntu-latest
-    permissions: read-all|write-all
+    permissions: write-all
     steps:
       - name: Download APK from build
         uses: actions/download-artifact@v1
