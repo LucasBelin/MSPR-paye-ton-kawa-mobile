@@ -45,8 +45,7 @@ class _ObjectGesturesWidgetState extends State<ArView> {
         appBar: AppBar(
           title: const Text('Réalité augmentée'),
         ),
-        body: Container(
-            child: Stack(children: [
+        body: Stack(children: [
           ARView(
             onARViewCreated: onARViewCreated,
             planeDetectionConfig: PlaneDetectionConfig.horizontalAndVertical,
@@ -61,7 +60,7 @@ class _ObjectGesturesWidgetState extends State<ArView> {
                       child: const Text("Tout enlever")),
                 ]),
           )
-        ])));
+        ]));
   }
 
   Future<File> _downloadFile(String url, String filename) async {
@@ -156,12 +155,12 @@ class _ObjectGesturesWidgetState extends State<ArView> {
 
   onPanEnded(String nodeName, Matrix4 newTransform) {
     debugPrint("Ended panning node $nodeName");
-    final pannedNode = nodes.firstWhere((element) => element.name == nodeName);
 
     /*
-    * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
+    * Uncomment the following commands if you want to keep the transformations of the Flutter representations of the nodes up to date
     * (e.g. if you intend to share the nodes through the cloud)
     */
+    // final pannedNode = nodes.firstWhere((element) => element.name == nodeName);
     //pannedNode.transform = newTransform;
   }
 
@@ -175,12 +174,12 @@ class _ObjectGesturesWidgetState extends State<ArView> {
 
   onRotationEnded(String nodeName, Matrix4 newTransform) {
     debugPrint("Ended rotating node $nodeName");
-    final rotatedNode = nodes.firstWhere((element) => element.name == nodeName);
 
     /*
-    * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
+    * Uncomment the following commands if you want to keep the transformations of the Flutter representations of the nodes up to date
     * (e.g. if you intend to share the nodes through the cloud)
     */
+    // final rotatedNode = nodes.firstWhere((element) => element.name == nodeName);
     // rotatedNode.transform = newTransform;
   }
 }
