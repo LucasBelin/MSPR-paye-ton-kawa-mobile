@@ -12,22 +12,22 @@ class ConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Confirm'),
-      content: const Text('Are you sure you want to log out?'),
+      title: const Text('Déconnexion'),
+      content: const Text('Voulez-vous vous déconnecter ?'),
       actions: [
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(false);
             onCancel(false);
           },
-          child: const Text('Cancel'),
+          child: const Text('Annuler'),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop(true);
             onConfirm(true);
           },
-          child: const Text('Confirm'),
+          child: const Text('Confirmer'),
         ),
       ],
     );
